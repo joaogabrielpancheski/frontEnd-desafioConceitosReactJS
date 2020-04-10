@@ -14,7 +14,15 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    // TODO
+    const { data: repositorie } = await api.post('repositories', {
+      title: 'backEnd-videoMaker',
+      url: 'https://github.com/joaogabrielpancheski/backEnd-videoMaker',
+      techs: [
+        'Node.js'
+      ]
+    });
+
+    setRepositories([...repositories, repositorie]);
   }
 
   async function handleRemoveRepository(id) {
