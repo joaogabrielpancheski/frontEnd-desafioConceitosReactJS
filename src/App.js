@@ -14,7 +14,7 @@ function App() {
   }, []);
 
   async function handleAddRepository() {
-    const { data: repositorie } = await api.post('repositories', {
+    const { data: repository } = await api.post('repositories', {
       title: 'backEnd-videoMaker',
       url: 'https://github.com/joaogabrielpancheski/backEnd-videoMaker',
       techs: [
@@ -22,11 +22,13 @@ function App() {
       ]
     });
 
-    setRepositories([...repositories, repositorie]);
+    setRepositories([...repositories, repository]);
   }
 
   async function handleRemoveRepository(id) {
-    // TODO
+    await api.delete(`repositories/${id}`);
+
+    setRepositories(repositories.filter(repository => repository.id !== id));
   }
 
   return (
@@ -35,7 +37,7 @@ function App() {
         {repositories.map(repository => (
           <li key={repository.id}>
             {repository.title}
-            <button onClick={() => handleRemoveRepository(1)}>
+            <button onClick={() => handleRemoveRepository(repository.id)}>
               Remover
             </button>
           </li>
